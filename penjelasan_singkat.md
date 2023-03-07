@@ -1,0 +1,20 @@
+Diberikan sekumpulan file json yang berisi data post di sosmed youtube, twitter, facebook, dan instagram.
+Mayoritas file json tersebut tidak mengandung newline, sehingga dapat langsung di-dump menjadi json menggunakan library python.
+Tujuan pengerjaan milestone satu adalah mengkategorikan seluruh post yang ada pada kumpulan file ke bentuk berikut:
+      social_media  date  count
+  dimana social_media adalah pada sosmed apa post tersebut dibuat, date adalah waktu dalam bentuk yyyy-mm-dd (granularitas hari), dan count adalah banyaknya post yang diunggah ke sosmed tersebut di hari itu.
+  
+Alur pengerjaan map-reduce data sosmed ini dibagi menjadi 2 bagian seperti biasa, yakni map dan reduce.
+
+Mapping:
+  Pertama-tama python harus menerima masukan file sebagai json, hal tersebut dilakukan dengan melakukan loop terhadap stdin. 
+  Karena kebanyakan file hanya memiliki 1 baris, maka bagian konversi dari stdin ke json dapat berjalan cukup aman.
+  Setelah objek json terbentuk, dapat diperhatikan dari beberapa sampel bahwa bentuk objek adalah array of json, maka hal tersebut menjadi perhatian.
+  Hal berikutnya yang dilakukan adalah membedakan mana objek json yang dimiliki youtube, facebook, dst. hal tersebut dicapai dengan memahami bahwa ada beberapa atribut kunci yang unik bagi setiap sosmed (tidak secara eksplisit dideklarasikan kunci oleh json).
+  Setelah json-json dapat dikategorikan berdasarkan sosial media, kemudian dibentuk key-value pair dengan key --> sosial media dan value --> date. Pada proses ini juga dilakukan formatting date agar seragam.
+  Setelah dibentuk key-value pair maka tahap mapping dapat diselesaikan dan dilanjutkan 
+  
+Reducing:
+  Perlu diperhatikan bahwa keluaran dari mapper sudah mengalami sorting sehingga masukan ke reducer sudah terurut.
+  Konsep reducing cukup mudah karena mirip dengan beberapa latihan yang lalu, yakni hanya menghitung jumlah key-value pair yang sama.
+  Singkatnya, key-value pair menjadi key baru dan value yang baru adalah jumlah dari key-value pair tersebut.
